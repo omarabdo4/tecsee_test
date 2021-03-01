@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
             if($user->role->name == "owner"){
                 return true;
             }
-            $allowed_policy = $user->policies()->where('name',$policy_name)->first();
+            $allowed_policy = $user->role->policies()->where('name',$policy_name)->first();
             return !!$allowed_policy;
         });
 
