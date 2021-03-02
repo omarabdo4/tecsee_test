@@ -59,7 +59,7 @@ class RoleController extends Controller
         $policies_ids = Policy::pluck('id');
 
         $request->validate([
-            'role_name' => ['required','string','max:100','unique:roles,name'],
+            'role_name' => ['required','string','max:100',Rule::notIn(['owner']),'unique:roles,name'],
             'policies' => ['array','min:1','max:500'],
             'policies.*' => ['integer', Rule::in($policies_ids)]
         ]);
