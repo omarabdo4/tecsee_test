@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
 
 use App\Jobs\NotifyUsersAssignedToTicket;
 use App\Jobs\NotifyUserTicketStatus;
@@ -20,6 +21,10 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Gate::allows('policy-based-gate','readall-ticket')){
+            abort(403);
+        }
+
         $authenticated_user = $request->user();
         
         if($authenticated_user->role->name == "owner"){
@@ -43,6 +48,10 @@ class TicketController extends Controller
      */
     public function create()
     {
+        if(!Gate::allows('policy-based-gate','create-ticket')){
+            abort(403);
+        }
+
         $users = User::all();
         return view('tickets.create',["users" => $users]);
     }
@@ -55,6 +64,10 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Gate::allows('policy-based-gate','create-ticket')){
+            abort(403);
+        }
+
         $all_users_ids = User::where('id','!=',$request->user()->id)->pluck('id');
 
         $request->validate([
@@ -118,12 +131,20 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
+        if(!Gate::allows('policy-based-gate','delete-ticket')){
+            abort(403);
+        }
+
         $ticket->delete();
         return redirect()->back()->with('status','ticket deleted successfully');
     }
 
     public function open(Ticket $ticket)
     {
+        if(!Gate::allows('policy-based-gate','open-ticket')){
+            abort(403);
+        }
+
         if($ticket->status != 1){
             abort(400);
         }
@@ -135,6 +156,10 @@ class TicketController extends Controller
 
     public function close(Ticket $ticket)
     {
+        if(!Gate::allows('policy-based-gate','close-ticket')){
+            abort(403);
+        }
+
         if($ticket->status == 1){
             abort(400);
         }
