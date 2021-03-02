@@ -16,10 +16,6 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::middleware(['auth'])->group(function () {
 
     Route::resource('tickets', TicketController::class);
@@ -31,6 +27,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('users',[UserController::class,'index'])->name('users.index');
     Route::post('users/{user}/assign',[UserController::class,'assign'])->name('users.assign');
 
+});
+
+Route::get('/', function () {
+    return redirect()->route('tickets.index');
 });
 
 

@@ -1,5 +1,18 @@
 @extends('layouts.admin')
 
+@push('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+@endpush
+
+@push('js')
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script>
+      (function() {
+        $('#myTable').DataTable();
+      })();
+    </script>
+@endpush
+
 @section('content')
         <div class="row">
           <div class="col-md-12">
@@ -15,7 +28,7 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <table class="table table-striped">
+                <table id="myTable">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
