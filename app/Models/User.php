@@ -54,4 +54,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Policy::class,'user_policy','user_id','policy_id');
     }
 
+    public function assigned_tickets()
+    {
+        return $this->belongsToMany(Ticket::class,'user_ticket','user_id','ticket_id');
+    }
+
 }

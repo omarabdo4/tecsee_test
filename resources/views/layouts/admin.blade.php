@@ -23,6 +23,7 @@
   <div class="wrapper ">
     @include('partials.sidebar')
     <div class="main-panel">
+      @include('partials.navbar')
       <div class="content">
         <div class="container-fluid">
             @yield('content')

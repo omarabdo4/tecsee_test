@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::resource('tickets', TicketController::class);
+    Route::get('tickets/{ticket}/open',[TicketController::class,'open'])->name('tickets.open');
+    Route::get('tickets/{ticket}/close',[TicketController::class,'close'])->name('tickets.close');
     Route::resource('roles', RoleController::class);
 
 });
