@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('tickets', TicketController::class);
     Route::get('tickets/{ticket}/open',[TicketController::class,'open'])->name('tickets.open');
     Route::get('tickets/{ticket}/close',[TicketController::class,'close'])->name('tickets.close');
+
     Route::resource('roles', RoleController::class);
+
+    Route::get('users',[UserController::class,'index'])->name('users.index');
+    Route::post('users/{user}/assign',[UserController::class,'assign'])->name('users.assign');
 
 });
 
