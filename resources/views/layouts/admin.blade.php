@@ -36,6 +36,15 @@
   <script src="{{asset('js/core/popper.min.js')}}" type="text/javascript"></script>
   <script src="{{asset('js/core/bootstrap-material-design.min.js')}}" type="text/javascript"></script>
   <script src="{{asset('js/material-dashboard.min.js?v=2.1.0')}}" type="text/javascript"></script>
+  <script>
+        $('#lang_select').on('change',function () {
+            // alert(this.value);
+            var urlParams = new URLSearchParams(window.location.search);
+            urlParams.set("lang", this.value);
+            // console.log(urlParams.toString());
+            window.location.href = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString();
+        });
+  </script>
   @stack('js')
 </body>
 

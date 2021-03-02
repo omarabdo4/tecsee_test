@@ -12,9 +12,14 @@
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              
-            </a>
+            <div style="width:100px;">
+                    <div class="form-group">
+                        <select class="form-control" id="lang_select">
+                            <option value="ar">عربي</option>
+                            <option value="en" {{ App::isLocale('en') ? "selected" : "" }}>English</option>
+                        </select>
+                    </div> 
+            </div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
