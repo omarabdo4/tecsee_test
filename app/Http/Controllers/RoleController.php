@@ -7,6 +7,7 @@ use App\Models\Policy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
 {
@@ -17,6 +18,9 @@ class RoleController extends Controller
      */
     public function index()
     {
+        if(!Gate::allows('policy-based-gate','readall-role')){
+            abort(403);
+        }
         $roles = Role::where("name","!=","owner")->get();
         return view('roles.index',["roles" => $roles]);
     }
@@ -45,6 +49,9 @@ class RoleController extends Controller
      */
     public function create()
     {
+        if(!Gate::allows('policy-based-gate','create-role')){
+            abort(403);
+        }
         return view('roles.create',["policies" => $this->resource_grouped_policies()]);
     }
 
@@ -56,6 +63,10 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Gate::allows('policy-based-gate','create-role')){
+            abort(403);
+        }
+
         $policies_ids = Policy::pluck('id');
 
         $request->validate([
@@ -91,6 +102,10 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        if(!Gate::allows('policy-based-gate','update-role')){
+            abort(403);
+        }
+
         return view('roles.edit',[
             "role" => $role,
             "policies" => $this->resource_grouped_policies(),
@@ -107,6 +122,10 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        if(!Gate::allows('policy-based-gate','update-role')){
+            abort(403);
+        }
+
         $policies_ids = Policy::pluck('id');
 
         $request->validate([
